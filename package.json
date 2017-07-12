@@ -1,0 +1,46 @@
+{
+    "name": "node-integritypays",
+    "version": "0.0.1",
+    "main": "./integritypays",
+    "description": "Integirtypays API wrapper for Node.js",
+    "author":
+    {
+        "name": "Starchup Inc",
+        "email": "geoffroy@starchup.com",
+        "url": "http://starchup.com"
+    },
+    "keywords": [
+        "starchup"
+    ],
+    "repository":
+    {
+        "type": "git",
+        "url": "git+ssh://git@github.com/Starchup/node-integritypays.git"
+    },
+    "engines":
+    {
+        "node": ">= 0.10"
+    },
+    "dependencies":
+    {
+        "request": "2.81.0",
+        "request-promise": "4.1.1"
+    },
+    "devDependencies":
+    {
+        "mocha": "3.2.0",
+        "chai": "3.5.0",
+        "jshint": "2.9.4"
+    },
+    "scripts":
+    {
+        "pretest": "jshint .",
+        "test": "mocha"
+    },
+    "readmeFilename": "README.md",
+    "bugs":
+    {
+        "url": "https://github.com/Starchup/node-integritypays/issues"
+    },
+    "homepage": "https://github.com/Starchup/node-integritypays"
+}
