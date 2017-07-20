@@ -4,7 +4,7 @@ Integritypays API wrapper for Node.js, fully promisified
 #### Initialization
 
 ```
-var integrity = require('node-here');
+var integrity = require('node-integritypays');
 var conf = {
     username: "your_username",
     password: "your_password"
