@@ -1,48 +1,40 @@
 /**
  * Modules from the community: package.json
  */
-var HERE = require('./here');
 var expect = require('chai').expect;
 
+var integrity = require('node-integritypays');
 var conf = {
-    AppId: "DemoAppId01082013GAL",
-    AppCode: "AJKnXv84fjrb0KIHawS0Tg"
+    username: "_your_username_",
+    password: "_your_password_"
 };
-var here = new HERE(conf);
+var Integrity = new integrity(conf);
 
-describe('Customer Methods', function ()
+/**
+ * Integrity test cards
+CC# 5454-5454-5454-5454
+EXP# 12/19
+Security Code: 998
+
+CC# 4242-4242-4242-4242
+EXP# 12/20
+Security Code: 999 
+*/
+
+describe('Credit Cad Methods', function ()
 {
-    var origin = {
-        lat: 41.2800,
-        lng: -96.0042
-    };
-    var destination = {
-        lat: 41.2939,
-        lng: -96.0206
-    };
-    var mode = 'fastest;car;traffic:enabled';
-    var departure = null;
+    var cardNumber = '';
+    var exp = '';
+    var customerId = '';
+    var nameOnCard = '';
+    var street = '';
+    var zipcode = '';
 
-    it('should get a car route from A to B', function (done)
+    it('should create a credit card on integrity', function (done)
     {
-        here.Route.Calculate(origin, destination, mode, departure).then(function (res)
+        Integrity.Card.Create(cardNumber, exp, customerId, nameOnCard, street, zipcode).then(function (res)
         {
-            expect(res).to.be.an('object');
-
-            done();
-        }).catch(done);
-    });
-
-    var waypoint1 = {
-        lat: 41.2852,
-        lng: -96.0110
-    };
-
-    it('should get a car route from A to B via C', function (done)
-    {
-        here.Route.Calculate(origin, destination, mode, departure, [waypoint1]).then(function (res)
-        {
-            expect(res).to.be.an('object');
+            console.log(res);
 
             done();
         }).catch(done);
