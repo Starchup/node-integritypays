@@ -23,8 +23,7 @@
     },
     "dependencies":
     {
-        "request": "2.81.0",
-        "request-promise": "4.1.1"
+        "soap": "0.21.0"
     },
     "devDependencies":
     {
