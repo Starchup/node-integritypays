@@ -66,15 +66,6 @@ var integritypays = function (config)
             self.Util.validateArgument(options.info, 'options.info');
             self.Util.validateArgument(options.info.id, 'options.info.id');
             self.Util.validateArgument(options.info.businessName, 'options.info.businessName');
-            self.Util.validateArgument(options.info.firstName, 'options.info.firstName');
-            self.Util.validateArgument(options.info.lastName, 'options.info.lastName');
-            self.Util.validateArgument(options.info.phone, 'options.info.phone');
-            self.Util.validateArgument(options.info.email, 'options.info.email');
-            self.Util.validateArgument(options.address, 'options.address');
-            self.Util.validateArgument(options.address.street, 'options.address.street');
-            self.Util.validateArgument(options.address.city, 'options.address.city');
-            self.Util.validateArgument(options.address.state, 'options.address.state');
-            self.Util.validateArgument(options.address.zip, 'options.address.zip');
 
             var query = {
                 Username: self.CONFIG.username,
@@ -89,25 +80,35 @@ var integritypays = function (config)
                 FirstName: options.info.firstName,
                 LastName: options.info.lastName,
                 Mobile: options.info.phone,
-                Email: options.info.email,
+                Email: options.info.email
+            }
 
-                Street1: options.address.street,
-                Street2: options.address.unit,
-                City: options.address.city,
-                StateID: options.address.state,
-                Zip: options.address.zip
-            };
+            if (options.address)
+            {
+                query.Street1 = options.address.street;
+                query.Street2 = options.address.unit;
+                query.City = options.address.city;
+                query.StateID = options.address.state;
+                query.Zip = options.address.zip;
+            }
 
-            // Fill in any remaining empty fields
             self.Util.fillFieldsIfEmpty(query, [
+                'FirstName',
+                'LastName',
+                'Mobile',
+                'Email',
                 'CustomerName',
                 'DayPhone',
                 'NightPhone',
                 'Fax',
                 'Title',
                 'Department',
+                'Street1',
                 'Street2',
                 'Street3',
+                'City',
+                'StateID',
+                'Zip',
                 'CountryID',
                 'Province'
             ]);
@@ -128,15 +129,6 @@ var integritypays = function (config)
             self.Util.validateArgument(options.info, 'options.info');
             self.Util.validateArgument(options.info.id, 'options.info.id');
             self.Util.validateArgument(options.info.businessName, 'options.info.businessName');
-            self.Util.validateArgument(options.info.firstName, 'options.info.firstName');
-            self.Util.validateArgument(options.info.lastName, 'options.info.lastName');
-            self.Util.validateArgument(options.info.phone, 'options.info.phone');
-            self.Util.validateArgument(options.info.email, 'options.info.email');
-            self.Util.validateArgument(options.address, 'options.address');
-            self.Util.validateArgument(options.address.street, 'options.address.street');
-            self.Util.validateArgument(options.address.city, 'options.address.city');
-            self.Util.validateArgument(options.address.state, 'options.address.state');
-            self.Util.validateArgument(options.address.zip, 'options.address.zip');
 
             var query = {
                 Username: self.CONFIG.username,
@@ -152,24 +144,35 @@ var integritypays = function (config)
                 FirstName: options.info.firstName,
                 LastName: options.info.lastName,
                 Mobile: options.info.phone,
-                Email: options.info.email,
+                Email: options.info.email
+            }
 
-                Street1: options.address.street,
-                Street2: options.address.unit,
-                City: options.address.city,
-                StateID: options.address.state,
-                Zip: options.address.zip
-            };
+            if (options.address)
+            {
+                query.Street1 = options.address.street;
+                query.Street2 = options.address.unit;
+                query.City = options.address.city;
+                query.StateID = options.address.state;
+                query.Zip = options.address.zip;
+            }
 
             self.Util.fillFieldsIfEmpty(query, [
+                'FirstName',
+                'LastName',
+                'Mobile',
+                'Email',
                 'CustomerName',
                 'DayPhone',
                 'NightPhone',
                 'Fax',
                 'Title',
                 'Department',
+                'Street1',
                 'Street2',
                 'Street3',
+                'City',
+                'StateID',
+                'Zip',
                 'CountryID',
                 'Province'
             ]);
