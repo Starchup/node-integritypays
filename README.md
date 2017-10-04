@@ -21,7 +21,7 @@ Integrity.Customer.Create(
 {
     info:
     {
-        id: 7,
+        id: 1,
         businessName: 'MI6',
         firstName: 'James',
         lastName: 'Bond',
@@ -45,10 +45,10 @@ Integrity.Customer.Create(
 ```
 Integrity.Customer.Update(
 {
-    foreignKey: 318,
+    foreignKey: __your_customer_id__,
     info:
     {
-        id: 7,
+        id: 1,
         businessName: 'MI6',
         firstName: 'James',
         lastName: 'Smith'
@@ -58,10 +58,17 @@ Integrity.Customer.Update(
 ```
 Integrity.Card.Create(
 {
-    foreignKey: 318,
+    foreignKey: __your_customer_id__,
 
     nameOnCard: 'Q',
     cardNumber: '_sandbox_card_number_',
     exp: '01/99'
+});
+```
+```
+Integrity.Card.Sale(
+{
+    foreignKey: __your_customer_id__,
+    amount: 1
 });
 ```
