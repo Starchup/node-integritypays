@@ -67,7 +67,7 @@ describe('Customer Methods', function ()
     });
 });
 
-describe('Customer Methods', function ()
+describe('Card Methods', function ()
 {
     it('should create a credit card on integrity', function (done)
     {
