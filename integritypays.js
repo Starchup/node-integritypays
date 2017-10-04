@@ -28,7 +28,7 @@ var integritypays = function (config)
             self.Util.validateArgument(options.exp, 'options.exp');
 
             var query = {
-                Username: self.CONFIG.username,
+                UserName: self.CONFIG.username,
                 Password: self.CONFIG.password,
 
                 TokenMode: 'DEFAULT',
