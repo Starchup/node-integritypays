@@ -49,7 +49,74 @@ var integritypays = function (config)
                 'ExtData'
             ]);
 
-            return self.Card.client.StoreCardAsync(query);
+            return self.Card.client.StoreCardAsync(query).then(function (res)
+            {
+                if (!res || !res.StoreCardResult)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                res = res.StoreCardResult;
+                if (!res.ExtData)
+                {
+                    if (res.RespMSG) throw new Error(res.RespMSG);
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                // Manually parse some tidbit of unparsed XML
+                return {
+                    foreignId: res.ExtData.replace("<CardSafeToken>", "").replace("</CardSafeToken>", "")
+                };
+            });
+        },
+        // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
+        Sale: function (options)
+        {
+            if (!self.Customer.client)
+            {
+                return wait(self.Card.Sale, options);
+            }
+
+            self.Util.validateArgument(options, 'options');
+            self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
+            self.Util.validateArgument(options.amount, 'options.amount');
+
+            var query = {
+                UserName: self.CONFIG.username,
+                Password: self.CONFIG.password,
+
+                TransType: 'Sale',
+                TokenMode: 'DEFAULT',
+
+                CardToken: options.foreignKey,
+                Amount: options.amount,
+            };
+
+            self.Util.fillFieldsIfEmpty(query, [
+                'InvNum',
+                'PNRef',
+                'ExtData'
+            ]);
+
+            return self.Card.client.ProcessCreditCardAsync(query).then(function (res)
+            {
+                if (!res || !res.ProcessCreditCardResult)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                res = res.ProcessCreditCardResult;
+                if (!res.PNRef || !res.HostCode || !res.AuthCode)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                return {
+                    PNRef: res.PNRef,
+                    HostCode: res.HostCode,
+                    AuthCode: res.AuthCode
+                };
+            });
         },
     };
 
@@ -113,7 +180,23 @@ var integritypays = function (config)
                 'Province'
             ]);
 
-            return self.Customer.client.ManageCustomerAsync(query);
+            return self.Customer.client.ManageCustomerAsync(query).then(function (res)
+            {
+                if (!res || !res.ManageCustomerResult)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                res = res.ManageCustomerResult;
+                if (!res.CustomerKey)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                return {
+                    foreignId: res.CustomerKey
+                };
+            });
         },
 
         // https://www.integritypays.com/developers/apis/soap-apis/#managecustomer
@@ -177,7 +260,23 @@ var integritypays = function (config)
                 'Province'
             ]);
 
-            return self.Customer.client.ManageCustomerAsync(query);
+            return self.Customer.client.ManageCustomerAsync(query).then(function (res)
+            {
+                if (!res || !res.ManageCustomerResult)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                res = res.ManageCustomerResult;
+                if (!res.CustomerKey)
+                {
+                    throw new Error('Invalid response data: ' + res);
+                }
+
+                return {
+                    foreignId: res.CustomerKey
+                };
+            });;
         }
     };
 
@@ -228,7 +327,7 @@ var integritypays = function (config)
             setTimeout(() =>
             {
                 callback(arg).then(resolve).catch(reject);
-            }, 300);
+            }, 200);
         });
     }
 
