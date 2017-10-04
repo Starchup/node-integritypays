@@ -62,13 +62,13 @@ Integrity.Card.Create(
 
     nameOnCard: 'Q',
     cardNumber: '_sandbox_card_number_',
-    exp: '01/99'
+    exp: '0199'
 });
 ```
 ```
 Integrity.Card.Sale(
 {
-    foreignKey: __your_customer_id__,
+    foreignKey: __your_card_id__,
     amount: 1
 });
 ```

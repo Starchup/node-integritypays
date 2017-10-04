@@ -3,39 +3,99 @@
  */
 var expect = require('chai').expect;
 
-var integrity = require('node-integritypays');
-var conf = {
-    username: "_your_username_",
-    password: "_your_password_"
-};
-var Integrity = new integrity(conf);
-
-/**
- * Integrity test cards
-CC# 5454-5454-5454-5454
-EXP# 12/19
-Security Code: 998
-
-CC# 4242-4242-4242-4242
-EXP# 12/20
-Security Code: 999 
-*/
-
-describe('Credit Cad Methods', function ()
+var integrity = require('./integritypays.js');
+var Integrity = new integrity(
 {
-    var cardNumber = '';
-    var exp = '';
-    var customerId = '';
-    var nameOnCard = '';
-    var street = '';
-    var zipcode = '';
+    merchant: _merchant_id_,
+    username: '_username_',
+    password: '_password_',
+    environment: 'sandbox'
+});
 
+var customerForeignId, cardForeignId;
+
+describe('Customer Methods', function ()
+{
+    it('should create a customer on integrity', function (done)
+    {
+        Integrity.Customer.Create(
+        {
+            info:
+            {
+                id: 1,
+                businessName: 'MI6',
+                firstName: 'James',
+                lastName: 'Bond',
+                phone: '(007) 007-0007',
+                email: 'james@bond.com'
+            },
+            address:
+            {
+                street: '1 Secret Avenue',
+                unit: '0',
+                city: 'London'
+            }
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
+
+            customerForeignId = res.foreignId;
+
+            done();
+        }).catch(done);
+    });
+
+    it('should update a customer on integrity', function (done)
+    {
+        Integrity.Customer.Update(
+        {
+            foreignKey: customerForeignId,
+            info:
+            {
+                id: 1,
+                businessName: 'MI6',
+                firstName: 'James',
+                lastName: 'Bond',
+                phone: '(007) 007-0007',
+                email: 'james@bond.com'
+            }
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
+            done();
+        }).catch(done);
+    });
+});
+
+describe('Customer Methods', function ()
+{
     it('should create a credit card on integrity', function (done)
     {
-        Integrity.Card.Create(cardNumber, exp, customerId, nameOnCard, street, zipcode).then(function (res)
+        Integrity.Card.Create(
         {
-            console.log(res);
+            foreignKey: customerForeignId,
+            nameOnCard: 'Q',
+            cardNumber: '5454545454545454',
+            exp: '1219'
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
 
+            cardForeignId = res.foreignId;
+
+            done();
+        }).catch(done);
+    });
+
+    it('should bill a credit card on integrity', function (done)
+    {
+        Integrity.Card.Sale(
+        {
+            foreignKey: cardForeignId,
+            amount: 1
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
             done();
         }).catch(done);
     });
