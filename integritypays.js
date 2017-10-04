@@ -110,6 +110,96 @@ var integritypays = function (config)
                 };
             });
         },
+        // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
+        Void: function (options)
+        {
+            if (!self.Customer.client) return wait(self.Card.Void, options);
+
+            self.Util.validateArgument(options, 'options');
+            self.Util.validateArgument(options.transactionForeignKey, 'options.transactionForeignKey');
+            self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
+
+            var query = {
+                UserName: self.CONFIG.username,
+                Password: self.CONFIG.password,
+
+                TransType: 'Void',
+                TokenMode: 'DEFAULT',
+
+                CardToken: options.foreignKey,
+                PNRef: options.transactionForeignKey
+            };
+
+            self.Util.fillFieldsIfEmpty(query, [
+                'InvNum',
+                'Amount',
+                'ExtData'
+            ]);
+
+            return self.Card.client.ProcessCreditCardAsync(query).then(function (res)
+            {
+                if (!res || !res.ProcessCreditCardResult)
+                {
+                    self.Util.throwInvalidDataError(res);
+                }
+
+                res = res.ProcessCreditCardResult;
+                if (!res.RespMSG || res.RespMSG !== 'Approved')
+                {
+                    self.Util.throwInvalidDataError(res);
+                }
+
+                return {
+                    foreignId: res.PNRef
+                };
+            });
+        },
+        // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
+        Refund: function (options)
+        {
+            if (!self.Customer.client) return wait(self.Card.Refund, options);
+
+            self.Util.validateArgument(options, 'options');
+            self.Util.validateArgument(options.transactionForeignKey, 'options.transactionForeignKey');
+            self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
+            self.Util.validateArgument(options.amount, 'options.amount');
+
+            var query = {
+                UserName: self.CONFIG.username,
+                Password: self.CONFIG.password,
+
+                TransType: 'Return',
+                TokenMode: 'DEFAULT',
+
+                CardToken: options.foreignKey,
+                PNRef: options.transactionForeignKey,
+                Amount: options.amount,
+            };
+
+            self.Util.fillFieldsIfEmpty(query, [
+                'InvNum',
+                'PNRef',
+                'ExtData'
+            ]);
+
+            return self.Card.client.ProcessCreditCardAsync(query).then(function (res)
+            {
+                if (!res || !res.ProcessCreditCardResult)
+                {
+                    self.Util.throwInvalidDataError(res);
+                }
+
+                res = res.ProcessCreditCardResult;
+                if (!res.RespMSG || res.RespMSG !== 'Approved')
+                {
+                    self.Util.throwInvalidDataError(res);
+                }
+
+                return {
+                    foreignId: res.PNRef
+                };
+            });
+        }
     };
 
     self.Customer = {

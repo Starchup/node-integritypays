@@ -12,7 +12,7 @@ var Integrity = new integrity(
     environment: 'sandbox'
 });
 
-var customerForeignId, cardForeignId;
+var customerForeignId, cardForeignId, transactionForeignId;
 
 describe('Customer Methods', function ()
 {
@@ -38,9 +38,7 @@ describe('Customer Methods', function ()
         }).then(function (res)
         {
             expect(res.foreignId).to.be.above(0);
-
             customerForeignId = res.foreignId;
-
             done();
         }).catch(done);
     });
@@ -80,9 +78,7 @@ describe('Card Methods', function ()
         }).then(function (res)
         {
             expect(res.foreignId).to.be.above(0);
-
             cardForeignId = res.foreignId;
-
             done();
         }).catch(done);
     });
@@ -93,6 +89,34 @@ describe('Card Methods', function ()
         {
             foreignKey: cardForeignId,
             amount: 1
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
+            transactionForeignId = res.foreignId;
+            done();
+        }).catch(done);
+    });
+
+    it('should refund a credit card on integrity', function (done)
+    {
+        Integrity.Card.Refund(
+        {
+            foreignKey: cardForeignId,
+            transactionForeignKey: transactionForeignId,
+            amount: 0.5
+        }).then(function (res)
+        {
+            expect(res.foreignId).to.be.above(0);
+            done();
+        }).catch(done);
+    });
+
+    it('should void a credit card on integrity', function (done)
+    {
+        Integrity.Card.Void(
+        {
+            foreignKey: cardForeignId,
+            transactionForeignKey: transactionForeignId
         }).then(function (res)
         {
             expect(res.foreignId).to.be.above(0);
