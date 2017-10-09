@@ -69,7 +69,7 @@ var integritypays = function (config)
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
         Sale: function (options)
         {
-            if (!self.Customer.client) return wait(self.Card.Sale, options);
+            if (!self.Card.client) return wait(self.Card.Sale, options);
 
             self.Util.validateArgument(options, 'options');
             self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
@@ -113,7 +113,7 @@ var integritypays = function (config)
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
         Void: function (options)
         {
-            if (!self.Customer.client) return wait(self.Card.Void, options);
+            if (!self.Card.client) return wait(self.Card.Void, options);
 
             self.Util.validateArgument(options, 'options');
             self.Util.validateArgument(options.transactionForeignKey, 'options.transactionForeignKey');
@@ -157,7 +157,7 @@ var integritypays = function (config)
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
         Refund: function (options)
         {
-            if (!self.Customer.client) return wait(self.Card.Refund, options);
+            if (!self.Card.client) return wait(self.Card.Refund, options);
 
             self.Util.validateArgument(options, 'options');
             self.Util.validateArgument(options.transactionForeignKey, 'options.transactionForeignKey');
