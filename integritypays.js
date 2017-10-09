@@ -17,7 +17,7 @@ var integritypays = function (config)
         // https://www.integritypays.com/developers/apis/soap-apis/#storecard
         Create: function (options)
         {
-            if (!self.Customer.client) return wait(self.Card.Create, options);
+            if (!self.Card.client) return wait(self.Card.Create, options);
 
             self.Util.validateArgument(options, 'options');
             self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
