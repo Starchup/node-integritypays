@@ -1,6 +1,6 @@
 {
     "name": "node-integritypays",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "main": "./integritypays",
     "description": "Integirtypays API wrapper for Node.js",
     "author":

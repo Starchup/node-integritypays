@@ -32,7 +32,7 @@ var integritypays = function (config)
 
                 CustomerKey: options.foreignKey,
                 CardNum: options.cardNumber,
-                ExpDate: options.exp,
+                ExpDate: options.exp.replace('/', ''),
 
                 NameOnCard: options.nameOnCard,
                 Street: options.street,
