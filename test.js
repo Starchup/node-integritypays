@@ -77,8 +77,23 @@ describe('Card Methods', function ()
             exp: '1219'
         }).then(function (res)
         {
+            console.log(res);
+
             expect(res.foreignId).to.be.above(0);
             cardForeignId = res.foreignId;
+            done();
+        }).catch(done);
+    });
+
+    it('should get a credit card from integrity', function (done)
+    {
+        Integrity.Customer.GetCards(
+        {
+            foreignKey: customerForeignId
+
+        }).then(function (res)
+        {
+            expect(res.length).to.be.above(0);
             done();
         }).catch(done);
     });

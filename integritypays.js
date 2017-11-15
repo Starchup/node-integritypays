@@ -2,6 +2,7 @@
  * Modules from the community: package.json
  */
 var soap = require('soap');
+var xmlP = require('fast-xml-parser');
 
 var production = 'https://gateway.ibxpays.com/';
 var sandbox = 'https://sandbox.ibxpays.com/';
@@ -348,6 +349,39 @@ var integritypays = function (config)
                 return {
                     foreignId: res.ManageCustomerResult.CustomerKey
                 };
+            });
+        },
+        GetCards: function (options)
+        {
+            if (!self.Customer.client) return wait(self.Customer.GetCards, options);
+
+            self.Util.validateArgument(options, 'options');
+            self.Util.validateArgument(options.foreignKey, 'options.foreignKey');
+
+            var query = {
+                Username: self.CONFIG.username,
+                Password: self.CONFIG.password,
+
+                CustomerKey: options.foreignKey
+            };
+
+            return self.Customer.client.GetCustomerPaymentMethodsAsync(query).then(function (res)
+            {
+                if (!res || !res.GetCustomerPaymentMethodsResult)
+                {
+                    self.Util.throwInvalidDataError(res);
+                }
+
+                var resJSON = xmlP.parse(res.GetCustomerPaymentMethodsResult);
+                if (!resJSON) self.Util.throwInvalidDataError(res);
+                if (!resJSON.PaymentMethods || !resJSON.PaymentMethods.Card) return [];
+
+                // Make sure we always return an array of cards even when there is only one
+                if (Array.isArray(resJSON.PaymentMethods.Card))
+                {
+                    return resJSON.PaymentMethods.Card;
+                }
+                else return [resJSON.PaymentMethods.Card];
             });
         }
     };
