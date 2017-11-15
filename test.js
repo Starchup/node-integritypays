@@ -77,8 +77,6 @@ describe('Card Methods', function ()
             exp: '1219'
         }).then(function (res)
         {
-            console.log(res);
-
             expect(res.foreignId).to.be.above(0);
             cardForeignId = res.foreignId;
             done();
