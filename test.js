@@ -35,10 +35,10 @@ describe('Customer Methods', function ()
                 unit: '0',
                 city: 'London'
             }
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
-            customerForeignId = res.foreignId;
+            expect(foreignId).to.be.above(0);
+            customerForeignId = foreignId;
             done();
         }).catch(done);
     });
@@ -57,9 +57,9 @@ describe('Customer Methods', function ()
                 phone: '(007) 007-0007',
                 email: 'james@bond.com'
             }
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
+            expect(foreignId).to.be.above(0);
             done();
         }).catch(done);
     });
@@ -75,10 +75,10 @@ describe('Card Methods', function ()
             nameOnCard: 'Q',
             cardNumber: '5454545454545454',
             exp: '1219'
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
-            cardForeignId = res.foreignId;
+            expect(foreignId).to.be.above(0);
+            cardForeignId = foreignId;
             done();
         }).catch(done);
     });
@@ -102,10 +102,10 @@ describe('Card Methods', function ()
         {
             foreignKey: cardForeignId,
             amount: 1
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
-            transactionForeignId = res.foreignId;
+            expect(foreignId).to.be.above(0);
+            transactionForeignId = foreignId;
             done();
         }).catch(done);
     });
@@ -117,9 +117,9 @@ describe('Card Methods', function ()
             foreignKey: cardForeignId,
             transactionForeignKey: transactionForeignId,
             amount: 0.5
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
+            expect(foreignId).to.be.above(0);
             done();
         }).catch(done);
     });
@@ -130,9 +130,9 @@ describe('Card Methods', function ()
         {
             foreignKey: cardForeignId,
             transactionForeignKey: transactionForeignId
-        }).then(function (res)
+        }).then(function (foreignId)
         {
-            expect(res.foreignId).to.be.above(0);
+            expect(foreignId).to.be.above(0);
             done();
         }).catch(done);
     });

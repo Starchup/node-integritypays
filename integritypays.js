@@ -62,9 +62,7 @@ var integritypays = function (config)
                 }
 
                 // Manually parse some tidbit of unparsed XML
-                return {
-                    foreignId: res.ExtData.replace("<CardSafeToken>", "").replace("</CardSafeToken>", "")
-                };
+                return res.ExtData.replace("<CardSafeToken>", "").replace("</CardSafeToken>", "");
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
@@ -106,9 +104,7 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return {
-                    foreignId: res.PNRef
-                };
+                return res.PNRef;
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
@@ -150,9 +146,7 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return {
-                    foreignId: res.PNRef
-                };
+                return res.PNRef;
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
@@ -196,9 +190,7 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return {
-                    foreignId: res.PNRef
-                };
+                return res.PNRef;
             });
         }
     };
@@ -271,9 +263,7 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return {
-                    foreignId: res.ManageCustomerResult.CustomerKey
-                };
+                return res.ManageCustomerResult.CustomerKey;
             });
         },
 
@@ -346,9 +336,7 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return {
-                    foreignId: res.ManageCustomerResult.CustomerKey
-                };
+                return res.ManageCustomerResult.CustomerKey;
             });
         },
         GetCards: function (options)
