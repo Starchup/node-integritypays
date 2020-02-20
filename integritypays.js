@@ -61,8 +61,10 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                // Manually parse some tidbit of unparsed XML
-                return res.ExtData.replace("<CardSafeToken>", "").replace("</CardSafeToken>", "");
+                var resJSON = xmlP.parse(res.ExtData);
+                return {
+                    foreignId: resJSON.CardSafeToken
+                };
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
