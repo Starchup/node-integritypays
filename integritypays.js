@@ -106,7 +106,10 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return res.PNRef;
+                return {
+                    foreignId: res.PNRef,
+                    amount: options.amount
+                };
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
@@ -148,7 +151,9 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return res.PNRef;
+                return {
+                    foreignId: res.PNRef
+                };
             });
         },
         // https://www.integritypays.com/developers/apis/soap-apis/#processcreditcard-2
@@ -192,7 +197,10 @@ var integritypays = function (config)
                     self.Util.throwInvalidDataError(res);
                 }
 
-                return res.PNRef;
+                return {
+                    foreignId: res.PNRef,
+                    amount: options.amount
+                };
             });
         }
     };
