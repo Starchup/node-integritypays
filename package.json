@@ -1,6 +1,6 @@
 {
     "name": "node-integritypays",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "main": "./integritypays",
     "description": "Integirtypays API wrapper for Node.js",
     "author":
@@ -23,19 +23,19 @@
     },
     "dependencies":
     {
-        "fast-xml-parser": "2.7.4",
-        "soap": "0.21.0"
+        "fast-xml-parser": "3.16.0",
+        "soap": "0.31.0"
     },
     "devDependencies":
     {
-        "mocha": "3.2.0",
-        "chai": "3.5.0",
-        "jshint": "2.9.4"
+        "mocha": "7.1.2",
+        "chai": "4.2.0",
+        "jshint": "2.11.0"
     },
     "scripts":
     {
         "pretest": "jshint .",
-        "test": "mocha --timeout 5000"
+        "test": "mocha --timeout 5000 --exit"
     },
     "readmeFilename": "README.md",
     "bugs":
